@@ -1,0 +1,200 @@
+export interface Book {
+  id: string;
+  title: string;
+  author: string;
+  category: string;
+  description: string;
+  pages: number;
+  rating: number;
+  coverColor: string;
+  sampleContent: string[];
+  trending?: boolean;
+}
+
+export const CATEGORIES = [
+  "All",
+  "Classic Fiction",
+  "Modern Fiction",
+  "Psychology / Behavior",
+  "Business / Leadership",
+  "Philosophy / Mind",
+  "Science / Popular Science",
+  "Self-Help / Personal Development",
+  "Young Adult / Coming-of-Age",
+  "Mystery / Thriller",
+  "Fantasy",
+  "Science Fiction",
+  "Nonfiction / History"
+];
+
+const RAW_BOOKS: Array<{ title: string; author: string; category: string }> = [
+  // Classic Fiction
+  { title: "Pride and Prejudice", author: "Jane Austen", category: "Classic Fiction" },
+  { title: "Moby-Dick", author: "Herman Melville", category: "Classic Fiction" },
+  { title: "Jane Eyre", author: "Charlotte Brontë", category: "Classic Fiction" },
+  { title: "Wuthering Heights", author: "Emily Brontë", category: "Classic Fiction" },
+  { title: "Great Expectations", author: "Charles Dickens", category: "Classic Fiction" },
+  { title: "The Odyssey", author: "Homer", category: "Classic Fiction" },
+  { title: "Crime and Punishment", author: "Fyodor Dostoevsky", category: "Classic Fiction" },
+  { title: "War and Peace", author: "Leo Tolstoy", category: "Classic Fiction" },
+  { title: "The Count of Monte Cristo", author: "Alexandre Dumas", category: "Classic Fiction" },
+  { title: "Middlemarch", author: "George Eliot", category: "Classic Fiction" },
+
+  // Modern Fiction
+  { title: "The Great Gatsby", author: "F. Scott Fitzgerald", category: "Modern Fiction" },
+  { title: "To Kill a Mockingbird", author: "Harper Lee", category: "Modern Fiction" },
+  { title: "1984", author: "George Orwell", category: "Modern Fiction" },
+  { title: "Brave New World", author: "Aldous Huxley", category: "Modern Fiction" },
+  { title: "The Catcher in the Rye", author: "J.D. Salinger", category: "Modern Fiction" },
+  { title: "Beloved", author: "Toni Morrison", category: "Modern Fiction" },
+  { title: "One Hundred Years of Solitude", author: "Gabriel García Márquez", category: "Modern Fiction" },
+  { title: "Midnight's Children", author: "Salman Rushdie", category: "Modern Fiction" },
+  { title: "The Road", author: "Cormac McCarthy", category: "Modern Fiction" },
+  { title: "Life of Pi", author: "Yann Martel", category: "Modern Fiction" },
+
+  // Psychology / Behavior
+  { title: "Influence", author: "Robert B. Cialdini", category: "Psychology / Behavior" },
+  { title: "The Lucifer Effect", author: "Philip Zimbardo", category: "Psychology / Behavior" },
+  { title: "The Psychopath Test", author: "Jon Ronson", category: "Psychology / Behavior" },
+  { title: "Thinking, Fast and Slow", author: "Daniel Kahneman", category: "Psychology / Behavior" },
+  { title: "Man's Search for Meaning", author: "Viktor E. Frankl", category: "Psychology / Behavior" },
+  { title: "The Social Animal", author: "Elliot Aronson", category: "Psychology / Behavior" },
+  { title: "Games People Play", author: "Eric Berne", category: "Psychology / Behavior" },
+  { title: "Predictably Irrational", author: "Dan Ariely", category: "Psychology / Behavior" },
+  { title: "Emotional Intelligence", author: "Daniel Goleman", category: "Psychology / Behavior" },
+  { title: "Quiet", author: "Susan Cain", category: "Psychology / Behavior" },
+
+  // Business / Leadership
+  { title: "Good to Great", author: "Jim Collins", category: "Business / Leadership" },
+  { title: "The Lean Startup", author: "Eric Ries", category: "Business / Leadership" },
+  { title: "Zero to One", author: "Peter Thiel", category: "Business / Leadership" },
+  { title: "The 7 Habits of Highly Effective People", author: "Stephen R. Covey", category: "Business / Leadership" },
+  { title: "Atomic Habits", author: "James Clear", category: "Business / Leadership" },
+  { title: "Start with Why", author: "Simon Sinek", category: "Business / Leadership" },
+  { title: "The Hard Thing About Hard Things", author: "Ben Horowitz", category: "Business / Leadership" },
+  { title: "How to Win Friends and Influence People", author: "Dale Carnegie", category: "Business / Leadership" },
+  { title: "Blue Ocean Strategy", author: "W. Chan Kim & Renée Mauborgne", category: "Business / Leadership" },
+  { title: "Leaders Eat Last", author: "Simon Sinek", category: "Business / Leadership" },
+
+  // Philosophy / Mind
+  { title: "Meditations", author: "Marcus Aurelius", category: "Philosophy / Mind" },
+  { title: "Beyond Good and Evil", author: "Friedrich Nietzsche", category: "Philosophy / Mind" },
+  { title: "The Republic", author: "Plato", category: "Philosophy / Mind" },
+  { title: "The Myth of Sisyphus", author: "Albert Camus", category: "Philosophy / Mind" },
+  { title: "Nicomachean Ethics", author: "Aristotle", category: "Philosophy / Mind" },
+  { title: "Critique of Pure Reason", author: "Immanuel Kant", category: "Philosophy / Mind" },
+  { title: "The Prince", author: "Niccolò Machiavelli", category: "Philosophy / Mind" },
+  { title: "The Bhagavad Gita", author: "Vyasa", category: "Philosophy / Mind" },
+  { title: "Tao Te Ching", author: "Lao Tzu", category: "Philosophy / Mind" },
+  { title: "Being and Time", author: "Martin Heidegger", category: "Philosophy / Mind" },
+
+  // Science / Popular Science
+  { title: "A Brief History of Time", author: "Stephen Hawking", category: "Science / Popular Science" },
+  { title: "The Selfish Gene", author: "Richard Dawkins", category: "Science / Popular Science" },
+  { title: "The Gene", author: "Siddhartha Mukherjee", category: "Science / Popular Science" },
+  { title: "Sapiens", author: "Yuval Noah Harari", category: "Science / Popular Science" },
+  { title: "Cosmos", author: "Carl Sagan", category: "Science / Popular Science" },
+  { title: "The Elegant Universe", author: "Brian Greene", category: "Science / Popular Science" },
+  { title: "Astrophysics for People in a Hurry", author: "Neil deGrasse Tyson", category: "Science / Popular Science" },
+  { title: "The Origin of Species", author: "Charles Darwin", category: "Science / Popular Science" },
+  { title: "Silent Spring", author: "Rachel Carson", category: "Science / Popular Science" },
+  { title: "The Immortal Life of Henrietta Lacks", author: "Rebecca Skloot", category: "Science / Popular Science" },
+
+  // Self-Help / Personal Development
+  { title: "The Power of Habit", author: "Charles Duhigg", category: "Self-Help / Personal Development" },
+  { title: "Deep Work", author: "Cal Newport", category: "Self-Help / Personal Development" },
+  { title: "Essentialism", author: "Greg McKeown", category: "Self-Help / Personal Development" },
+  { title: "Can't Hurt Me", author: "David Goggins", category: "Self-Help / Personal Development" },
+  { title: "The Subtle Art of Not Giving a F*ck", author: "Mark Manson", category: "Self-Help / Personal Development" },
+  { title: "Mindset", author: "Carol S. Dweck", category: "Self-Help / Personal Development" },
+  { title: "Grit", author: "Angela Duckworth", category: "Self-Help / Personal Development" },
+  { title: "The Mountain Is You", author: "Brianna Wiest", category: "Self-Help / Personal Development" },
+  { title: "Daring Greatly", author: "Brené Brown", category: "Self-Help / Personal Development" },
+  { title: "The Four Agreements", author: "Don Miguel Ruiz", category: "Self-Help / Personal Development" },
+
+  // Young Adult / Coming-of-Age
+  { title: "Harry Potter and the Sorcerer's Stone", author: "J.K. Rowling", category: "Young Adult / Coming-of-Age" },
+  { title: "The Hunger Games", author: "Suzanne Collins", category: "Young Adult / Coming-of-Age" },
+  { title: "The Fault in Our Stars", author: "John Green", category: "Young Adult / Coming-of-Age" },
+  { title: "Divergent", author: "Veronica Roth", category: "Young Adult / Coming-of-Age" },
+  { title: "Percy Jackson: The Lightning Thief", author: "Rick Riordan", category: "Young Adult / Coming-of-Age" },
+  { title: "Anne of Green Gables", author: "L.M. Montgomery", category: "Young Adult / Coming-of-Age" },
+  { title: "Little Women", author: "Louisa May Alcott", category: "Young Adult / Coming-of-Age" },
+  { title: "The Book Thief", author: "Markus Zusak", category: "Young Adult / Coming-of-Age" },
+  { title: "Wonder", author: "R.J. Palacio", category: "Young Adult / Coming-of-Age" },
+  { title: "Looking for Alaska", author: "John Green", category: "Young Adult / Coming-of-Age" },
+
+  // Mystery / Thriller
+  { title: "The Girl with the Dragon Tattoo", author: "Stieg Larsson", category: "Mystery / Thriller" },
+  { title: "Gone Girl", author: "Gillian Flynn", category: "Mystery / Thriller" },
+  { title: "The Da Vinci Code", author: "Dan Brown", category: "Mystery / Thriller" },
+  { title: "And Then There Were None", author: "Agatha Christie", category: "Mystery / Thriller" },
+  { title: "The Big Sleep", author: "Raymond Chandler", category: "Mystery / Thriller" },
+  { title: "Sherlock Holmes", author: "Arthur Conan Doyle", category: "Mystery / Thriller" },
+  { title: "In the Woods", author: "Tana French", category: "Mystery / Thriller" },
+  { title: "The Silent Patient", author: "Alex Michaelides", category: "Mystery / Thriller" },
+  { title: "The Maltese Falcon", author: "Dashiell Hammett", category: "Mystery / Thriller" },
+  { title: "The Woman in White", author: "Wilkie Collins", category: "Mystery / Thriller" },
+
+  // Fantasy
+  { title: "The Hobbit", author: "J.R.R. Tolkien", category: "Fantasy" },
+  { title: "The Fellowship of the Ring", author: "J.R.R. Tolkien", category: "Fantasy" },
+  { title: "The Two Towers", author: "J.R.R. Tolkien", category: "Fantasy" },
+  { title: "The Return of the King", author: "J.R.R. Tolkien", category: "Fantasy" },
+  { title: "A Game of Thrones", author: "George R.R. Martin", category: "Fantasy" },
+  { title: "Harry Potter & The Chamber of Secrets", author: "J.K. Rowling", category: "Fantasy" },
+  { title: "The Name of the Wind", author: "Patrick Rothfuss", category: "Fantasy" },
+  { title: "Mistborn", author: "Brandon Sanderson", category: "Fantasy" },
+  { title: "The Lion, the Witch and the Wardrobe", author: "C.S. Lewis", category: "Fantasy" },
+  { title: "American Gods", author: "Neil Gaiman", category: "Fantasy" },
+
+  // Science Fiction
+  { title: "Dune", author: "Frank Herbert", category: "Science Fiction" },
+  { title: "Neuromancer", author: "William Gibson", category: "Science Fiction" },
+  { title: "Foundation", author: "Isaac Asimov", category: "Science Fiction" },
+  { title: "Ender's Game", author: "Orson Scott Card", category: "Science Fiction" },
+  { title: "The Left Hand of Darkness", author: "Ursula K. Le Guin", category: "Science Fiction" },
+  { title: "Fahrenheit 451", author: "Ray Bradbury", category: "Science Fiction" },
+  { title: "Do Androids Dream of Electric Sheep?", author: "Philip K. Dick", category: "Science Fiction" },
+  { title: "The Martian", author: "Andy Weir", category: "Science Fiction" },
+  { title: "Snow Crash", author: "Neal Stephenson", category: "Science Fiction" },
+  { title: "Hyperion", author: "Dan Simmons", category: "Science Fiction" },
+
+  // Nonfiction / History
+  { title: "The Diary of a Young Girl", author: "Anne Frank", category: "Nonfiction / History" },
+  { title: "The Silk Roads", author: "Peter Frankopan", category: "Nonfiction / History" },
+  { title: "Guns, Germs, and Steel", author: "Jared Diamond", category: "Nonfiction / History" },
+  { title: "The Wright Brothers", author: "David McCullough", category: "Nonfiction / History" },
+  { title: "Team of Rivals", author: "Doris Kearns Goodwin", category: "Nonfiction / History" },
+  { title: "The Warmth of Other Suns", author: "Isabel Wilkerson", category: "Nonfiction / History" },
+  { title: "Into Thin Air", author: "Jon Krakauer", category: "Nonfiction / History" },
+  { title: "Educated", author: "Tara Westover", category: "Nonfiction / History" },
+  { title: "The Rise and Fall of the Third Reich", author: "William L. Shirer", category: "Nonfiction / History" },
+  { title: "A People's History of the United States", author: "Howard Zinn", category: "Nonfiction / History" }
+];
+
+const PALETTES = [
+  "from-amber-900 via-stone-800 to-amber-950",
+  "from-stone-900 via-amber-950 to-stone-800",
+  "from-amber-800 via-amber-900 to-stone-900",
+  "from-stone-800 via-yellow-950 to-amber-900",
+  "from-amber-950 via-stone-900 to-amber-800"
+];
+
+export const BOOKS: Book[] = RAW_BOOKS.map((b, idx) => ({
+  id: `book-${idx + 1}`,
+  title: b.title,
+  author: b.author,
+  category: b.category,
+  description: `A profound masterwork in ${b.category.toLowerCase()} exploring human nature, wisdom, and transformative insights.`,
+  pages: 180 + ((idx * 17) % 320),
+  rating: Number((4.3 + ((idx * 3) % 7) / 10).toFixed(1)),
+  coverColor: PALETTES[idx % PALETTES.length],
+  trending: idx % 9 === 0 || idx < 5,
+  sampleContent: [
+    `CHAPTER I: THE BEGINNING\n\nIt is a truth universally acknowledged, that a mind in search of deep understanding must retreat into quiet contemplation. The pages before you hold timeless wisdom crafted across centuries of human discourse.`,
+    `CHAPTER II: THE CORE INQUIRY\n\nTo observe without judgment is the highest form of intelligence. As we traverse through the intricate webs of thought, we discover that every idea is connected by a thread of natural order.`,
+    `CHAPTER III: PERCEPTION AND REALITY\n\nWhat we hear is an opinion, not a fact. What we see is a perspective, not the truth. By mastering the art of attentive reading, we transcend the boundaries of immediate experience.`,
+    `CHAPTER IV: THE SYNTHESIS\n\nKnowledge accumulates like a quiet stream flowing into a vast ocean. In this final chapter of reflection, the synthesis of ideas illuminates a pathway forward.`
+  ]
+}));

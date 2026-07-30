@@ -1,0 +1,11 @@
+# BookVerse Global Codeowners
+# All files are owned by the repository maintainer
+* @Hellthefox808
+
+# Architecture & Security
+/03-Architecture/ @Hellthefox808
+/06-Security/ @Hellthefox808
+
+# Core Application Logic
+/src/lib/api/ @Hellthefox808
+/src/lib/ai/ @Hellthefox808

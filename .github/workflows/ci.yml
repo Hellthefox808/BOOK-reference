@@ -1,0 +1,35 @@
+name: BookVerse Production CI/CD Engine
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  validate-and-build:
+    name: Build, Lint & Security Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Project Dependencies
+        run: npm ci
+
+      - name: Type-Check TypeScript Codebase
+        run: npx tsc --noEmit
+
+      - name: Next.js Production Build Verification
+        run: npm run build
+
+      - name: Security Vulnerability Audit
+        run: npm audit --audit-level=high
+        continue-on-error: true

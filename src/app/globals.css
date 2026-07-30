@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#f6efe7] text-stone-900 transition-colors duration-300 dark:bg-[#100d0c] dark:text-stone-100 antialiased selection:bg-amber-200 selection:text-amber-900 dark:selection:bg-amber-900 dark:selection:text-amber-100;
+  }
+}
+
+/* Reduced transparency support for accessibility */
+@media (prefers-reduced-transparency: reduce) {
+  .backdrop-blur-xl,
+  .backdrop-blur-md,
+  .backdrop-blur-sm {
+    backdrop-filter: none !important;
+    background-color: #f6efe7 !important;
+  }
+  .dark .backdrop-blur-xl,
+  .dark .backdrop-blur-md,
+  .dark .backdrop-blur-sm {
+    backdrop-filter: none !important;
+    background-color: #100d0c !important;
+  }
+}
+
+/* Custom scrollbar for reader */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-stone-300/60 dark:bg-stone-800/60 rounded-full hover:bg-stone-400 dark:hover:bg-stone-700 transition;
+}
